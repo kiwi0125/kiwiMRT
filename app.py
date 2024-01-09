@@ -65,18 +65,18 @@ def handle_message(event):
 
     if re.match("橘線班次",emsg):
         message = show_orange()
-        line_bot_api.reply_message(event.reply_token,message)
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(message))
 
     if re.match("紅線班次",emsg):
         message = show_red()
-        line_bot_api.reply_message(event.reply_token,message)
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(message))
 
     if match_result:
         start = emsg.split("往")[0]
         direction = emsg.split("往")[1]
         my_MRT = MRT(start, direction)
         message - my_MRT.return_time_result()
-        line_bot_api.reply_message(event.reply_token,message)
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(message))
 
     
 
