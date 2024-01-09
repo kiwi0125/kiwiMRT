@@ -110,7 +110,10 @@ class MRT:
 ###########從起訖站跟周幾決定好爬蟲的網址##########
     def url_generate(self):
         self.url_dict()
-        r = requests.get(self.url_dict_orange[self.enter_station][self.week_str])
+        if self.direction == '東' or self.direction == '西':
+            r = requests.get(self.url_dict_orange[self.enter_station][self.week_str])
+        elif self.direction == '南' or self.direction == '北':
+            r = requests.get(self.url_dict_red[self.enter_station][self.week_str])
         soup = BeautifulSoup(r.text,"html.parser")
         self.table = soup.select('.tableTimeTableData')
 
@@ -145,7 +148,7 @@ class MRT:
 
 ###############決定要產生往哪裡的時刻表字典##########
     def table_generate(self):
-        self.url_generate() #先決定「起訖站跟周幾」的爬蟲網址
+        self.url_generate()
 
         #再從方向決定時刻表字典
         if self.direction == '東' or self.direction == '北':
