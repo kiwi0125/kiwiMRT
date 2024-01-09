@@ -75,7 +75,7 @@ def handle_message(event):
         start = emsg.split("往")[0]
         direction = emsg.split("往")[1]
         my_MRT = MRT(start, direction)
-        message - my_MRT.return_time_result()
+        message = my_MRT.return_time_result()
         line_bot_api.reply_message(event.reply_token,TextSendMessage(message))
 
     
