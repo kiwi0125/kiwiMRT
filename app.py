@@ -91,7 +91,7 @@ def handle_message(event):
             zone = emsg.split("\n")[1]
         line_bot_api.reply_message(event.reply_token,TextSendMessage(target_function))
         
-        if target_function == "新增儲存點":
+        if re.match("新增儲存點", target_function):
             line_bot_api.reply_message(event.reply_token,TextSendMessage("進到新增1"))
             address = emsg.split("\n")[1]
             abstract = emsg.split("\n")[2]
@@ -99,7 +99,7 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token,TextSendMessage("進到新增2"))
             
 
-        elif target_function == "查看儲存點":
+        elif re.match("查看儲存點", target_function):
             line_bot_api.reply_message(event.reply_token,TextSendMessage("進到查看1"))
             if len(emsg.split("\n")) == 1:
                 message = site.display_all(event.reply_token)
@@ -109,7 +109,7 @@ def handle_message(event):
                 message = site.display_zone(event.reply_token, zone)
             
 
-        elif target_function == "刪除儲存點":
+        elif re.match("刪除儲存點", target_function):
             if len(emsg) >6 :
                 delete_number = int(emsg[6:])
                 message = delete_number(event.reply_token, delete_number)
@@ -119,10 +119,10 @@ def handle_message(event):
                 message = site.delete_zone(event.reply_token, zone)
             
 
-        elif target_function == "清空儲存點":
+        elif re.match("清空儲存點", target_function):
             message = site.delete_all(event.reply_token)
             
-        #line_bot_api.reply_message(event.reply_token,TextSendMessage(message))
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(message))
 
 
 
