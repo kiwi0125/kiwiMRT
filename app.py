@@ -89,8 +89,9 @@ def handle_message(event):
             city = emsg.split("\n")[1]
             is_zone = any(emsg.split("\n")[1].endswith(d) for d in ["鄉","鎮","區"]) or emsg.split("\n")[1] in shi_zone
             zone = emsg.split("\n")[1]
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(target_function))
         
-        if  target_function == "新增儲存點":
+        if target_function == "新增儲存點":
             line_bot_api.reply_message(event.reply_token,TextSendMessage("進到新增1"))
             address = emsg.split("\n")[1]
             abstract = emsg.split("\n")[2]
