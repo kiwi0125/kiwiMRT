@@ -84,19 +84,22 @@ def handle_message(event):
     if emsg.startswith("@"):
         site = site_record()
         target_function = emsg[1:6] # @XX儲存點
-        is_city = any(emsg.split("\n")[1].endswith(d) for d in ["縣","市"]) and emsg.split("\n")[1] not in shi_zone
-        line_bot_api.reply_message(event.reply_token,TextSendMessage("進到這"))
-        city = emsg.split("\n")[1]
-        is_zone = any(emsg.split("\n")[1].endswith(d) for d in ["鄉","鎮","區"]) or emsg.split("\n")[1] in shi_zone
-        zone = emsg.split("\n")[1]
+        if len(emsg.split("\n") > 1):
+            is_city = any(emsg.split("\n")[1].endswith(d) for d in ["縣","市"]) and emsg.split("\n")[1] not in shi_zone
+            city = emsg.split("\n")[1]
+            is_zone = any(emsg.split("\n")[1].endswith(d) for d in ["鄉","鎮","區"]) or emsg.split("\n")[1] in shi_zone
+            zone = emsg.split("\n")[1]
         
         if  target_function == "新增儲存點":
+            line_bot_api.reply_message(event.reply_token,TextSendMessage("進到新增1"))
             address = emsg.split("\n")[1]
             abstract = emsg.split("\n")[2]
             message = site.add_todo(user_name, event.reply_token, address, abstract)
+            line_bot_api.reply_message(event.reply_token,TextSendMessage("進到新增2"))
             
 
         elif target_function == "查看儲存點":
+            line_bot_api.reply_message(event.reply_token,TextSendMessage("進到查看1"))
             if len(emsg.split("\n")) == 1:
                 message = site.display_all(event.reply_token)
             elif is_city:
