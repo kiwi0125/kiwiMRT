@@ -82,6 +82,7 @@ def handle_message(event):
 
 
     if emsg.startswith("@"):
+        site = site_record()
         target_function = emsg[1:6] # @XX儲存點
         is_city = any(emsg.split("\n")[1].endswith(d) for d in ["縣","市"]) and emsg.split("\n")[1] not in shi_zone
         city = emsg.split("\n")[1]
@@ -91,16 +92,16 @@ def handle_message(event):
         if  target_function == "新增儲存點":
             address = emsg.split("\n")[1]
             abstract = emsg.split("\n")[2]
-            message = add_todo(user_name, event.reply_token, address, abstract)
+            message = site.add_todo(user_name, event.reply_token, address, abstract)
             
 
         elif target_function == "查看儲存點":
             if len(emsg.split("\n")) == 1:
-                message = display_all(event.reply_token)
+                message = site.display_all(event.reply_token)
             elif is_city:
-                message = display_city(event.reply_token, city)
+                message = site.display_city(event.reply_token, city)
             elif is_zone:
-                message = display_zone(event.reply_token, zone)
+                message = site.display_zone(event.reply_token, zone)
             
 
         elif target_function == "刪除儲存點":
@@ -108,13 +109,13 @@ def handle_message(event):
                 delete_number = int(emsg[6:])
                 message = delete_number(event.reply_token, delete_number)
             elif is_city:
-                message = delete_city(event.reply_token, city)
+                message = site.delete_city(event.reply_token, city)
             elif is_zone:
-                message = delete_zone(event.reply_token, zone)
+                message = site.delete_zone(event.reply_token, zone)
             
 
         elif target_function == "清空儲存點":
-            message = delete_all(event.reply_token)
+            message = site.delete_all(event.reply_token)
             
         line_bot_api.reply_message(event.reply_token,TextSendMessage(message))
 
