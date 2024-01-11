@@ -54,29 +54,72 @@ def handle_message(event):
 
     profile = line_bot_api.get_profile(event.source.user_id)
     # uid = profile.user_id
-    # user_name = profile.display_name #使用者名稱
+    user_name = profile.display_name #使用者名稱
     emsg = event.message.text
-
+    shi_zone = ["宜蘭市","竹北市","苗栗市","頭份市","彰化市","員林市","南投市","斗六市","太保市","朴子市","屏東市","台東市","臺東市","花蓮市","馬公市"]
+    #如果使用者傳出的訊息有XXX往XXX，在match_result就會有東西
     pattern = re.compile(r'(.+)往(.+)')
-    # 使用正規表達式進行匹配
     match_result = pattern.match(emsg)
     
 
-
+    #送出站別的選單(橘線)
     if re.match("橘線班次",emsg):
         message = show_orange()
         line_bot_api.reply_message(event.reply_token,message)
 
+    #送出站別的選單(紅線)
     if re.match("紅線班次",emsg):
         message = show_red()
         line_bot_api.reply_message(event.reply_token,message)
 
+    #如果收到的訊息是XXX往XXX，就送出時刻表的訊息給使用者
     if match_result:
         start = emsg.split("往")[0]
         direction = emsg.split("往")[1]
         my_MRT = MRT(start, direction)
         message = my_MRT.return_time_result()
         line_bot_api.reply_message(event.reply_token,TextSendMessage(message))
+
+
+    if emsg.startswith("@"):
+        target_function = emsg[1:6] # @XX儲存點
+        is_city = any(emsg.split("\n")[1].endswith(d) for d in ["縣","市"]) and emsg.split("\n")[1] not in shi_zone
+        city = emsg.split("\n")[1]
+        is_zone = any(emsg.split("\n")[1].endswith(d) for d in ["鄉","鎮","區"]) or emsg.split("\n")[1] in shi_zone
+        zone = emsg.split("\n")[1]
+
+        if  target_function == "新增儲存點":
+            address = emsg.split("\n")[1]
+            abstract = emsg.split("\n")[2]
+            message = add_todo(user_name, event.reply_token, address, abstract)
+            
+
+        elif target_function == "查看儲存點":
+            if len(emsg.split("\n")) == 1:
+                message = display_all(event.reply_token)
+            elif is_city:
+                message = display_city(event.reply_token, city)
+            elif is_zone:
+                message = display_zone(event.reply_token, zone)
+            
+
+        elif target_function == "刪除儲存點":
+            if len(emsg) >6 :
+                delete_number = int(emsg[6:])
+                message = delete_number(event.reply_token, delete_number)
+            elif is_city:
+                message = delete_city(event.reply_token, city)
+            elif is_zone:
+                message = delete_zone(event.reply_token, zone)
+            
+
+        elif target_function == "清空儲存點":
+            message = delete_all(event.reply_token)
+            
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(message))
+
+
+
 
     
 
