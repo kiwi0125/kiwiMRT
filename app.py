@@ -120,7 +120,7 @@ def handle_message(event):
         elif re.match("清空儲存點", target_function):
             message = site.delete_all(event.reply_token)
             
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(message))
+        #line_bot_api.reply_message(event.reply_token,TextSendMessage(message))
 
 
 
