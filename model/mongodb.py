@@ -16,34 +16,34 @@ class site_record:
         
         
     ###########新增儲存點############
-    def add_todo(self,user_name , user_id, site, abstract):
+    def add_todo(self, user_name, user_id, site, abstract):
         now = datetime.datetime.now(tz=datetime.timezone(datetime.timedelta(hours=8)))
         pattern = re.compile(r'(?P<city>[^縣市]+[縣市])(?P<zone>[^縣市區鄉鎮]+[縣市區鄉鎮])')
         city = match.group('city')
         zone = match.group('zone')
         i = 1
         is_exis = True
-        
-        if self.collect.find_one({"user_id" : user_id, "site" : site}):
-            content = "這個點被存過囉，請確認後重新嘗試！"
-            return content
-        while is_exis:
-            is_exis = self.collect.find_one({"user_id" : user_id, "site_number" : i})
-            i += 1
-        i -= 1
-        self.collect.insert_one(
-            {"user_id" : user_id,
-            "user_name" : user_name,
-            "site_number" : i,
-            "site" : site,
-            "city" : city,
-            "zone" : zone,
-            "abstract" : abstract,
-            "create_time" : now.strftime('%Y/%m/%d %H:%M:%S')
-        }
-        )
-        content = "地點儲存成功"
-        return content
+        return "進到mongo"
+        # if self.collect.find_one({"user_id" : user_id, "site" : site}):
+        #     content = "這個點被存過囉，請確認後重新嘗試！"
+        #     return content
+        # while is_exis:
+        #     is_exis = self.collect.find_one({"user_id" : user_id, "site_number" : i})
+        #     i += 1
+        # i -= 1
+        # self.collect.insert_one(
+        #     {"user_id" : user_id,
+        #     "user_name" : user_name,
+        #     "site_number" : i,
+        #     "site" : site,
+        #     "city" : city,
+        #     "zone" : zone,
+        #     "abstract" : abstract,
+        #     "create_time" : now.strftime('%Y/%m/%d %H:%M:%S')
+        # }
+        # )
+        # content = "地點儲存成功"
+        # return content
 
 
 #########################################檢視資料########################################################

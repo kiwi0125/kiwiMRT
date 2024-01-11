@@ -94,7 +94,7 @@ def handle_message(event):
             address = emsg.split("\n")[1]
             abstract = emsg.split("\n")[2]
             message = site.add_todo(user_name, event.reply_token, address, abstract)
-            line_bot_api.reply_message(event.reply_token,TextSendMessage("進到新增2"))
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(message))
             
 
         elif re.match("查看儲存點", target_function):
