@@ -82,9 +82,9 @@ def handle_message(event):
 
 
     if emsg.startswith("@"):
-        line_bot_api.reply_message(event.reply_token,TextSendMessage("進到這"))
         site = site_record()
         target_function = emsg[1:6] # @XX儲存點
+        line_bot_api.reply_message(event.reply_token,TextSendMessage("進到這"))
         is_city = any(emsg.split("\n")[1].endswith(d) for d in ["縣","市"]) and emsg.split("\n")[1] not in shi_zone
         city = emsg.split("\n")[1]
         is_zone = any(emsg.split("\n")[1].endswith(d) for d in ["鄉","鎮","區"]) or emsg.split("\n")[1] in shi_zone
