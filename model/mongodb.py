@@ -52,21 +52,21 @@ class site_record:
     ##########檢視儲存點(全部)###########
     def display_all(self, user_id):
         all_lst = [self.collect.find({"user_id" : user_id})]
-        for i in len(all_lst):
+        for i in range(len(all_lst)):
             content += f'儲存點{all_lst[i]["site_number"]}\n地址:{all_lst[i]["site"]}\n摘要:{all_lst[i]["abstract"]}\n建立時間:{all_lst[i]["create_time"]}\n\n'
             content = content.rstrip('\n\n')
         return content
     ##########檢視儲存點(按城市)###########
     def display_city(self, user_id, city):
         all_lst = [self.collect.find({"user_id" : user_id, "city" : city})]
-        for i in len(all_lst):
+        for i in range(len(all_lst)):
             content += f'儲存點{all_lst[i]["site_number"]}\n地址:{all_lst[i]["site"]}\n摘要:{all_lst[i]["abstract"]}\n建立時間:{all_lst[i]["create_time"]}\n\n'
             content = content.rstrip('\n\n')
         return content
     ##########檢視儲存點(按區)###########
     def display_zone(self, user_id, zone):
         all_lst = [self.collect.find({"user_id" : user_id, "zone" : zone})]
-        for i in len(all_lst):
+        for i in range(len(all_lst)):
             content += f'儲存點{all_lst[i]["site_number"]}\n地址:{all_lst[i]["site"]}\n摘要:{all_lst[i]["abstract"]}\n建立時間:{all_lst[i]["create_time"]}\n\n'
             content = content.rstrip('\n\n')
         return content
