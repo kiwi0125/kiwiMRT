@@ -18,12 +18,13 @@ class site_record:
     ###########新增儲存點############
     def add_todo(self, user_name, user_id, site, abstract):
         now = datetime.datetime.now(tz=datetime.timezone(datetime.timedelta(hours=8)))
-        pattern = re.compile(r'(?P<city>[^縣市]+[縣市])(?P<zone>[^縣市區鄉鎮]+[縣市區鄉鎮])')
-        city = match.group('city')
-        zone = match.group('zone')
-        i = 1
-        is_exis = True
         return "進到mongo"
+        # pattern = re.compile(r'(?P<city>[^縣市]+[縣市])(?P<zone>[^縣市區鄉鎮]+[縣市區鄉鎮])')
+        # city = match.group('city')
+        # zone = match.group('zone')
+        # i = 1
+        # is_exis = True
+            
         # if self.collect.find_one({"user_id" : user_id, "site" : site}):
         #     content = "這個點被存過囉，請確認後重新嘗試！"
         #     return content
