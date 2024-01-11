@@ -38,9 +38,6 @@ def callback():
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
 
-
-
-
     #header webhook body
     try:
         handler.handle(body, signature)
@@ -53,7 +50,7 @@ def callback():
 def handle_message(event):
 
     profile = line_bot_api.get_profile(event.source.user_id)
-    # uid = profile.user_id
+    uid = profile.user_id
     user_name = profile.display_name #使用者名稱
     emsg = event.message.text
     shi_zone = ["宜蘭市","竹北市","苗栗市","頭份市","彰化市","員林市","南投市","斗六市","太保市","朴子市","屏東市","台東市","臺東市","花蓮市","馬公市"]
@@ -65,12 +62,12 @@ def handle_message(event):
     #送出站別的選單(橘線)
     if re.match("橘線班次",emsg):
         message = show_orange()
-        line_bot_api.reply_message(event.reply_token,message)
+        line_bot_api.reply_message(uid,message)
 
     #送出站別的選單(紅線)
     if re.match("紅線班次",emsg):
         message = show_red()
-        line_bot_api.reply_message(event.reply_token,message)
+        line_bot_api.reply_message(uid,message)
 
     #如果收到的訊息是XXX往XXX，就送出時刻表的訊息給使用者
     if match_result:
@@ -78,7 +75,7 @@ def handle_message(event):
         direction = emsg.split("往")[1]
         my_MRT = MRT(start, direction)
         message = my_MRT.return_time_result()
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(message))
+        line_bot_api.reply_message(uid,TextSendMessage(message))
 
 
     if emsg.startswith("@"):
@@ -94,33 +91,32 @@ def handle_message(event):
             address = emsg.split("\n")[1]
             abstract = emsg.split("\n")[2]
             message = site.add_todo(user_name, event.reply_token, address, abstract)
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(message))
+            line_bot_api.reply_message(uid,TextSendMessage(message))
             
 
         elif re.match("查看儲存點", target_function):
-            line_bot_api.reply_message(event.reply_token,TextSendMessage("進到查看1"))
             if len(emsg.split("\n")) == 1:
-                message = site.display_all(event.reply_token)
+                message = site.display_all(uid)
             elif is_city:
-                message = site.display_city(event.reply_token, city)
+                message = site.display_city(uid, city)
             elif is_zone:
-                message = site.display_zone(event.reply_token, zone)
+                message = site.display_zone(uid, zone)
             
 
         elif re.match("刪除儲存點", target_function):
             if len(emsg) >6 :
                 delete_number = int(emsg[6:])
-                message = delete_number(event.reply_token, delete_number)
+                message = delete_number(uid, delete_number)
             elif is_city:
-                message = site.delete_city(event.reply_token, city)
+                message = site.delete_city(uid, city)
             elif is_zone:
-                message = site.delete_zone(event.reply_token, zone)
+                message = site.delete_zone(uid, zone)
             
 
         elif re.match("清空儲存點", target_function):
-            message = site.delete_all(event.reply_token)
+            message = site.delete_all(uid)
             
-        #line_bot_api.reply_message(event.reply_token,TextSendMessage(message))
+        line_bot_api.reply_message(uid,TextSendMessage(message))
 
 
 
