@@ -62,12 +62,12 @@ def handle_message(event):
     #送出站別的選單(橘線)
     if re.match("橘線班次",emsg):
         message = show_orange()
-        line_bot_api.reply_message(uid,message)
+        line_bot_api.reply_message(event.reply_token,message)
 
     #送出站別的選單(紅線)
     if re.match("紅線班次",emsg):
         message = show_red()
-        line_bot_api.reply_message(uid,message)
+        line_bot_api.reply_message(event.reply_token,message)
 
     #如果收到的訊息是XXX往XXX，就送出時刻表的訊息給使用者
     if match_result:
@@ -75,7 +75,7 @@ def handle_message(event):
         direction = emsg.split("往")[1]
         my_MRT = MRT(start, direction)
         message = my_MRT.return_time_result()
-        line_bot_api.reply_message(uid,TextSendMessage(message))
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(message))
 
 
     if emsg.startswith("@"):
@@ -90,8 +90,7 @@ def handle_message(event):
         if re.match("新增儲存點", target_function):
             address = emsg.split("\n")[1]
             abstract = emsg.split("\n")[2]
-            message = site.add_todo(user_name, event.reply_token, address, abstract)
-            line_bot_api.reply_message(uid,TextSendMessage(message))
+            message = site.add_todo(user_name, uid, address, abstract)
             
 
         elif re.match("查看儲存點", target_function):
@@ -116,7 +115,7 @@ def handle_message(event):
         elif re.match("清空儲存點", target_function):
             message = site.delete_all(uid)
             
-        line_bot_api.reply_message(uid,TextSendMessage(message))
+        line_bot_api.push_message(uid,TextSendMessage(message))
 
 
 
