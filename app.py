@@ -58,6 +58,61 @@ def handle_message(event):
     pattern = re.compile(r'(.+)往(.+)')
     match_result = pattern.match(emsg)
     
+    if re.match("使用說明",emsg):
+
+        emoji = [
+            {"index" : 0,
+             "productId" : "5ac21a18040ab15980c9b43e",
+             "emojiId" : "085"},
+             {"index" : 1,
+             "productId" : "5ac21a18040ab15980c9b43e",
+             "emojiId" : "085"},
+             {"index" : 2,
+             "productId" : "5ac21a18040ab15980c9b43e",
+             "emojiId" : "085"},
+             {"index" : 3,
+             "productId" : "5ac21a18040ab15980c9b43e",
+             "emojiId" : "085"}
+
+        ]
+        text_message = """捷運相關功能$請直接按下選單
+提供查詢班次服務
+
+儲存點相關功能
+$新增儲存點：請輸入以下格式
+@新增儲存點
+地址
+摘要
+
+$查看儲存點：請輸入以下格式
+@查看儲存點
+XX縣/市/鄉/鎮/市/區
+
+$刪除儲存點：請輸入以下格式(3種範例)
+@刪除儲存點3
+@刪除儲存點
+高雄市
+@刪除儲存點
+三民區
+
+$清除儲存點：請輸入以下訊息
+@清除儲存點
+"""
+        message = TextSendMessage(text = text_message, emojis = emoji)
+        line_bot_api.reply_message(event.reply_token,message)
+
+    if re.match("高雄捷運",emsg):
+        message = show_MRT()
+        line_bot_api.reply_message(event.reply_token,message)
+
+    if re.match("我的儲存點",emsg):
+        pass
+
+    if re.match("高雄捷運"):
+        image_message = ImageSendMessage(
+            original_content_url = "https://i.imgur.com/XwjjdSi.jpg"
+        )
+        line_bot_api.reply_message(event.reply_token, image_message)
 
     #送出站別的選單(橘線)
     if re.match("橘線班次",emsg):

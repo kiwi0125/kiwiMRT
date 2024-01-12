@@ -1689,7 +1689,6 @@ def show_red():
                 )
     return flex_message
 
-
 def show_orange():
     flex_message = FlexSendMessage(
             alt_text="橘起訖站",
@@ -2619,4 +2618,84 @@ def show_orange():
                         ]
                         }
             )
+    return flex_message
+
+def show_MRT():
+    flex_message = FlexSendMessage(
+        alt_text="捷運功能",
+        contents={
+                        {
+            "type": "bubble",
+            "hero": {
+                "type": "image",
+                "url": "https://i.imgur.com/m0lm4wu.png",
+                "size": "full",
+                "aspectRatio": "20:13",
+                "aspectMode": "cover",
+                "action": {
+                "type": "uri",
+                "uri": "http://linecorp.com/"
+                }
+            },
+            "body": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                {
+                    "type": "text",
+                    "text": "請選擇功能",
+                    "size": "xxl",
+                    "weight": "bold",
+                    "align": "center",
+                    "color": "#E3170D"
+                }
+                ]
+            },
+            "footer": {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                {
+                    "type": "button",
+                    "action": {
+                    "type": "message",
+                    "label": "高雄捷運圖",
+                    "text": "高雄捷運圖"
+                    },
+                    "gravity": "center",
+                    "color": "#1E90FF"
+                },
+                {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                    {
+                        "type": "button",
+                        "action": {
+                        "type": "message",
+                        "label": "紅線班次",
+                        "text": "紅線班次"
+                        },
+                        "gravity": "center",
+                        "color": "#FF0000",
+                        "style": "secondary"
+                    },
+                    {
+                        "type": "button",
+                        "action": {
+                        "type": "message",
+                        "label": "橘線班次",
+                        "text": "橘線班次"
+                        },
+                        "gravity": "center",
+                        "color": "#FF7D40",
+                        "style": "secondary"
+                    }
+                    ]
+                }
+                ]
+            }
+            }
+        }
+        )
     return flex_message
