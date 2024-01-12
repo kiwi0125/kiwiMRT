@@ -81,7 +81,9 @@ def handle_message(event):
     if emsg.startswith("@"):
         site = site_record()
         target_function = emsg[1:6] # @XX儲存點
-        if len(emsg.split("\n")) > 1:
+
+        #####針對特定欄位的資料庫操作，需要把城市或區域抓出來
+        if len(emsg.split("\n")) > 1:    
             is_city = any(emsg.split("\n")[1].endswith(d) for d in ["縣","市"]) and emsg.split("\n")[1] not in shi_zone
             city = emsg.split("\n")[1]
             is_zone = any(emsg.split("\n")[1].endswith(d) for d in ["鄉","鎮","區"]) or emsg.split("\n")[1] in shi_zone
@@ -103,7 +105,7 @@ def handle_message(event):
             
 
         elif re.match("刪除儲存點", target_function):
-            if len(emsg) >6 :
+            if len(emsg.split("\n")) == 1:
                 number = int(emsg[6:])
                 message = site.delete_number(uid, number)
             elif is_city:
