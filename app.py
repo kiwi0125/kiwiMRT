@@ -104,8 +104,8 @@ def handle_message(event):
 
         elif re.match("刪除儲存點", target_function):
             if len(emsg) >6 :
-                delete_number = int(emsg[6:])
-                message = delete_number(uid, delete_number)
+                number = int(emsg[6:])
+                message = site.delete_number(uid, number)
             elif is_city:
                 message = site.delete_city(uid, city)
             elif is_zone:
