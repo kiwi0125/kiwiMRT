@@ -73,8 +73,8 @@ def handle_message(event):
              {"index" : 3,
              "productId" : "5ac21a18040ab15980c9b43e",
              "emojiId" : "085"}
-
         ]
+        
         text_message = """捷運相關功能$請直接按下選單
 提供查詢班次服務
 
