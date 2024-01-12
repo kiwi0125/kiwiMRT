@@ -108,7 +108,7 @@ $清除儲存點：請輸入以下訊息
     if re.match("我的儲存點",emsg):
         pass
 
-    if re.match("高雄捷運圖",emsg):
+    if re.match("#高雄捷運圖",emsg):
         image_message = ImageSendMessage(
             original_content_url = "https://i.imgur.com/XwjjdSi.jpg"
         )
