@@ -101,7 +101,7 @@ class site_record:
     def delete_city(self, user_id, city):
         if self.collect.find_one({"user_id" : user_id, "city": city}):
             delete_count = self.collect.delete_many({"user_id" : user_id, "city" : city})
-            content = f"{delete_count.delete_count}個{city}的儲存點已刪除成功"
+            content = f"{delete_count.deleted_count}個{city}的儲存點已刪除成功"
             return content
         else:
             content = f"找不到{city}的儲存點，請重新嘗試！"
@@ -110,7 +110,7 @@ class site_record:
     def delete_zone(self, user_id, zone):
         if self.collect.find_one({"user_id" : user_id, "zone": zone}):
             delete_count = self.collect.delete_many({"user_id" : user_id, "zone" : zone})
-            content = f"{delete_count.delete_count}個{zone}的儲存點已刪除成功"
+            content = f"{delete_count.deleted_count}個{zone}的儲存點已刪除成功"
             return content
         else:
             content = f"找不到{zone}的儲存點，請重新嘗試！"
@@ -119,7 +119,7 @@ class site_record:
     def delete_all(self, user_id):
         if self.collect.find_one({"user_id" : user_id}):
             delete_count = self.collect.delete_many({"user_id" : user_id})
-            content = f"已刪除您的{delete_count}個儲存點！"
+            content = f"已刪除您的{delete_count.deleted_count}個儲存點！"
             return content
         else:
             content = f"找不到您的儲存點，請重新嘗試！"
