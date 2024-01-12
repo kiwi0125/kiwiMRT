@@ -52,25 +52,36 @@ class site_record:
     ##########檢視儲存點(全部)###########
     def display_all(self, user_id):
         all_lst = list(self.collect.find({"user_id" : user_id}))
-        content = ""
-        for i in range(len(all_lst)):
-            content += f'儲存點{all_lst[i]["site_number"]}\n地址:{all_lst[i]["site"]}\n摘要:{all_lst[i]["abstract"]}\n建立時間:{all_lst[i]["create_time"]}\n\n'
+        if all_lst == []:
+            content = "找不到您的儲存點，請重新嘗試！"
+        else:
+            content = ""
+            for i in range(len(all_lst)):
+                content += f'儲存點{all_lst[i]["site_number"]}\n地址:{all_lst[i]["site"]}\n摘要:{all_lst[i]["abstract"]}\n建立時間:{all_lst[i]["create_time"]}\n\n'
             content = content.rstrip('\n\n')
         return content
     ##########檢視儲存點(按城市)###########
     def display_city(self, user_id, city):
         all_lst = list(self.collect.find({"user_id" : user_id, "city" : city}))
-        content = ""
-        for i in range(len(all_lst)):
-            content += f'儲存點{all_lst[i]["site_number"]}\n地址:{all_lst[i]["site"]}\n摘要:{all_lst[i]["abstract"]}\n建立時間:{all_lst[i]["create_time"]}\n\n'
+
+        if all_lst == []:
+            content = f"找不到{city}的儲存點，請重新嘗試！"
+        else:
+            content = ""
+            for i in range(len(all_lst)):
+                content += f'儲存點{all_lst[i]["site_number"]}\n地址:{all_lst[i]["site"]}\n摘要:{all_lst[i]["abstract"]}\n建立時間:{all_lst[i]["create_time"]}\n\n'
             content = content.rstrip('\n\n')
+
         return content
     ##########檢視儲存點(按區)###########
     def display_zone(self, user_id, zone):
         all_lst = list(self.collect.find({"user_id" : user_id, "zone" : zone}))
-        content = ""
-        for i in range(len(all_lst)):
-            content += f'儲存點{all_lst[i]["site_number"]}\n地址:{all_lst[i]["site"]}\n摘要:{all_lst[i]["abstract"]}\n建立時間:{all_lst[i]["create_time"]}\n\n'
+        if all_lst == []:
+            content = f"找不到{zone}的儲存點，請重新嘗試！"
+        else:
+            content = ""
+            for i in range(len(all_lst)):
+                content += f'儲存點{all_lst[i]["site_number"]}\n地址:{all_lst[i]["site"]}\n摘要:{all_lst[i]["abstract"]}\n建立時間:{all_lst[i]["create_time"]}\n\n'
             content = content.rstrip('\n\n')
         return content
 
@@ -108,7 +119,7 @@ class site_record:
     def delete_all(self, user_id):
         if self.collect.find_one({"user_id" : user_id}):
             delete_count = self.collect.delete_many({"user_id" : user_id})
-            content = f"您的的儲存點已刪除成功"
+            content = f"已刪除您的{delete_count}個儲存點！"
             return content
         else:
             content = f"找不到您的儲存點，請重新嘗試！"
