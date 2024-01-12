@@ -2623,8 +2623,7 @@ def show_orange():
 def show_MRT():
     flex_message = FlexSendMessage(
         alt_text="捷運功能",
-        contents={
-                        {
+        contents={                    
             "type": "bubble",
             "hero": {
                 "type": "image",
@@ -2696,6 +2695,5 @@ def show_MRT():
                 ]
             }
             }
-        }
         )
     return flex_message
